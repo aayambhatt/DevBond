@@ -1,0 +1,20 @@
+{
+  "name": "devbond",
+  "version": "1.0.0",
+  "description": "Developer's Social Media ",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+   "dev": "nodemon src/app.js"
+  },
+  "keywords": [
+    "NodeJS",
+    "JS",
+    "backend"
+  ],
+  "author": "Aayam Bhatt",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
