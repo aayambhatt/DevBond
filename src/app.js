@@ -4,23 +4,20 @@ const User = require("./models/user");
 
 const app = express();
 
-app.post("/signup", async (req,res)=>{
+// middleware activated for all the routes
+app.use(express.json());
 
-  // creating a new instance of the User model
-  const user = new User({
-    firstName: "Ruru",
-    lastName: "Sen",
-    emailID: "RuruSen@gmail.com",
-    password: "Ruru@1234"
-});
+app.post("/signup", async (req,res)=>{
+ // creating a new instance of the User model
+ const user = new User(req.body)
 
 try{
-await user.save();
-res.send("User added successfully");
-} catch(err){
-  res.status(400).send("Error saving the error")
+  await user.save();
+    res.send("User added successfully");
 }
-
+catch(err){
+  res.status(401).send("User cannot be added");
+}
 
 })
 
