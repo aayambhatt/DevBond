@@ -17,7 +17,7 @@ try{
     res.send("User added successfully");
 }
 catch(err){
-  res.status(401).send("User cannot be added");
+  res.status(401).send(`User cannot be added. Error: ${err.message}`);
 }
 
 });
