@@ -2,9 +2,15 @@ const express = require("express");
 const connectDB = require("./config/database");
 const validator = require('validator');
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 const app = express();
 
+
+app.use(cors({
+  origin: "http://localhost:5173/login",
+  credentials: true,
+}));
 // middleware activated for all the routes
 app.use(express.json());
 app.use(cookieParser());

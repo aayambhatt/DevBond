@@ -5,7 +5,7 @@ const User = require("../models/user.js");
  try{ // read the token from the request cookies
   const {token} = req.cookies;
   if(!token){
-    throw new Error("Token is not valid");
+    return res.status(401).send("Please login first!");
   }
   // validate the token
   const decodedObj = await jwt.verify(token, "DEVBOND@123");

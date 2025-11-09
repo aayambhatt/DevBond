@@ -9,7 +9,7 @@ const validator = require("validator");
 
 
 
-// posting user, signup
+// Signup API
 authRouter.post("/signup", async (req,res)=>{
     try{ // Validation of data
     validateSignUpData(req);
@@ -28,14 +28,22 @@ authRouter.post("/signup", async (req,res)=>{
     password: passwordHash,
   });
   
-  await user.save();
-      res.send("User added successfully");
+     const savedUser = await user.save();
+        // Generate a JWT token containing the user's ID
+        const token = await savedUser.getJWT();
+  
+        // Store the token in a cookie
+        res.cookie("token", token);
+  
+
+      res.json({ message: "User added successfully", data: savedUser});
   }
   catch(err){
     res.status(401).send(`ERROR: ${err.message}`);
   }
   
   });
+
 
 // login API
 authRouter.post("/login", async (req,res)=>{
@@ -63,7 +71,7 @@ authRouter.post("/login", async (req,res)=>{
         // Store the token in a cookie
         res.cookie("token", token);
   
-        res.send("User login successful");
+        res.send(user);
       }
       else{
         throw new Error("Password is not correct");
@@ -74,6 +82,8 @@ authRouter.post("/login", async (req,res)=>{
     }
   });
 
+
+// logout API
 authRouter.post("/logout", async (req, res) => {
     res.cookie("token", null, {
       expires: new Date(Date.now()),
